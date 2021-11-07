@@ -398,8 +398,9 @@ GameObject:
   m_Component:
   - component: {fileID: 710616791}
   - component: {fileID: 710616790}
+  - component: {fileID: 710616792}
   m_Layer: 0
-  m_Name: Audio
+  m_Name: Audio Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,6 +516,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &710616792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710616789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f75b4ff120d6bb2498c808e4c9846b79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 710616790}
+  sfx:
+  - {fileID: 8300000, guid: 8388bcc0fe8b7674ebe111bc6193b35a, type: 3}
+  - {fileID: 8300000, guid: d2053264674739a4b83741a7dc8e2663, type: 3}
+  - {fileID: 8300000, guid: 451b6db59770af9418132621000c3a68, type: 3}
+  - {fileID: 8300000, guid: 713912dd0738bbc4ca323159934aa508, type: 3}
+  - {fileID: 8300000, guid: 8557897e7994c4442846131d6680eaae, type: 3}
 --- !u!1 &778009231
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,20 +710,6 @@ MonoBehaviour:
   - {fileID: 244923276}
   - {fileID: 1812822779}
   selector: {fileID: 1136707378}
-  audioSource: {fileID: 710616790}
-  sfx:
-  - {fileID: 8300000, guid: 8388bcc0fe8b7674ebe111bc6193b35a, type: 3}
-  - {fileID: 8300000, guid: d2053264674739a4b83741a7dc8e2663, type: 3}
-  - {fileID: 8300000, guid: 451b6db59770af9418132621000c3a68, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!4 &1366138753
 Transform:
   m_ObjectHideFlags: 0

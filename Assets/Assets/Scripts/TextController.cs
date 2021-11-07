@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class TextController : MonoBehaviour
 {
-    private enum State : int
+    private enum State
     {
         Intro,
         
@@ -33,9 +33,6 @@ public class TextController : MonoBehaviour
     
     private State currentState = State.Intro;
     public GameObject selector;
-    
-    public AudioSource audioSource;
-    public AudioClip[] sfx = new AudioClip[12];
 
     private int currentSelection = 0;
 
@@ -64,23 +61,13 @@ public class TextController : MonoBehaviour
     private void Intro()
     {
         currentState = State.Intro;
-        audioSource.PlayOneShot(sfx[0], 1);
+        AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.Rain, 0);
         SetStory("It is raining heavily. You are walking alone in the woods. Suddenly, " +
                  "you see a house down the alley.");
         SetOption("You run to visit the house", State.House);
         SetOption("You continue walking in the rain", State.ContinueWalking);
     }
 
-    
-    IEnumerator WaitAndPlayDoor()
-    {
-        yield return new WaitForSeconds(3f);
-        
-        audioSource.Stop();
-        audioSource.PlayOneShot(sfx[1], 1);
-    }
-    
-    
     private void House()
     {
         SetStory("You arrive at the door. The door knob seems lose, you easily enter in the house. " +
@@ -89,19 +76,13 @@ public class TextController : MonoBehaviour
         SetOption("You take the sword and leave.", State.TakeSword);
         SetOption("You take the bow and leave.", State.TakeBow);
 
-        StartCoroutine(WaitAndPlayDoor());
+        AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.Door, 3.0f);
     }
 
-    IEnumerator WaitAndPlayBear()
-    {
-        yield return new WaitForSeconds(6f);
-        audioSource.PlayOneShot(sfx[2], 1);
-    }
-    
     private void AfterHouse()
     {
-        audioSource.PlayOneShot(sfx[1], 1);
-        audioSource.PlayOneShot(sfx[0], 1);
+        AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.Door);
+        AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.Rain, 0.1f, false);
         
         string startText;
         State lastState = currentState;
@@ -122,7 +103,7 @@ public class TextController : MonoBehaviour
                 break;
         }
 
-        StartCoroutine(WaitAndPlayBear());
+        AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.Bear, 6.0f, false);
         SetStory(startText + " Walking down the alley, a wild bear appears.");
         
         switch (lastState) {
@@ -141,7 +122,8 @@ public class TextController : MonoBehaviour
     
     private void KillBear()
     {
-        SetStory("You ran towards the bear and slice it in half with your might sword. GG. " +
+        AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.SwordAttack, 2.0f);
+        SetStory("You ran towards the bear and slice it in half with your mighty sword. GG. " +
                  "To be continued");
         SetOption(":)", State.Intro);
         SetOption("Play Again", State.Intro);
@@ -149,7 +131,7 @@ public class TextController : MonoBehaviour
     
     private void ShootBear()
     {
-        SetStory("You draw out your bow and take a steady position, but you have no arrows. " +
+        SetStory("You draw out your bow and take a steady position.... but you have no arrows. " +
                  "You took only a bow from the house. The bear catches you and maims you. You died.");
         SetOption(";(", State.Intro);
         SetOption("Play again", State.Intro);
@@ -187,6 +169,7 @@ public class TextController : MonoBehaviour
 
     private void GoToState()
     {
+        AudioController.Instance.SyncWithStoryState();
         choicesTaken.Add(currentState);
         currentState = statesBasedOnSelectedOption[currentSelection];
 
