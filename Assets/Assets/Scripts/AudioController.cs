@@ -15,6 +15,7 @@ public class AudioController : MonoBehaviour
         SwordAttack,
         RippingApart,
         BirdsChirping,
+        WindBlowing,
         
         Count
     }
@@ -50,6 +51,11 @@ public class AudioController : MonoBehaviour
         file.PlayAfterSeconds = afterSeconds;
         file.ShouldStopSoundBefore = shouldStopSoundBefore;
         filesToPlay.Enqueue(file);
+    }
+
+    public void StopCurrentlyPlayedSound()
+    {
+        audioSource.Stop();
     }
 
     private void Awake()
