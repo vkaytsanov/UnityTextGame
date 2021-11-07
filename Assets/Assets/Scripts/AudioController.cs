@@ -14,12 +14,17 @@ public class AudioController : MonoBehaviour
         Bear,
         SwordAttack,
         RippingApart,
-
+        BirdsChirping,
+        
         Count
     }
 
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip[] sfx = new AudioClip[(int) SoundEffectType.Count];
+    [SerializeField] 
+    private AudioSource audioSource;
+    
+    [SerializeField]
+    [EnumNamedArray( typeof(SoundEffectType) )]
+    private AudioClip[] sfx = new AudioClip[(int) SoundEffectType.Count];
 
     private Queue filesToPlay = new Queue(8);
     private float timeOfLastPlay = float.MinValue;

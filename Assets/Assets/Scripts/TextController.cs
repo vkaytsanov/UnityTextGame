@@ -20,7 +20,9 @@ public class TextController : MonoBehaviour
         ShootBear,
         KillBear,
         HandsBear,
-        BearCatchesYou
+        BearCatchesYou,
+        
+        AfterBear
 
     }
 
@@ -83,6 +85,7 @@ public class TextController : MonoBehaviour
     {
         AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.Door);
         AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.Rain, 0.1f, false);
+        AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.Bear, 6.0f, false);
         
         string startText;
         State lastState = currentState;
@@ -102,8 +105,7 @@ public class TextController : MonoBehaviour
                 startText = "What?";
                 break;
         }
-
-        AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.Bear, 6.0f, false);
+        
         SetStory(startText + " Walking down the alley, a wild bear appears.");
         
         switch (lastState) {
@@ -122,11 +124,12 @@ public class TextController : MonoBehaviour
     
     private void KillBear()
     {
-        AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.SwordAttack, 2.0f);
-        SetStory("You ran towards the bear and slice it in half with your mighty sword. GG. " +
-                 "To be continued");
-        SetOption(":)", State.Intro);
-        SetOption("Play Again", State.Intro);
+        AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.SwordAttack, 2.0f, false);
+        AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.RippingApart, 1.0f, false);
+        SetStory("You ran towards the bear and slice it in half with your mighty sword. " +
+                 "You take some of its meat and continue ahead");
+        SetOption("Going ahead...", State.AfterBear);
+        SetOption("Going ahead...", State.AfterBear);
     }
     
     private void ShootBear()
@@ -144,6 +147,15 @@ public class TextController : MonoBehaviour
         SetOption(";(", State.Intro);
         SetOption("Play again", State.Intro);
     }
+    
+    private void AfterBear()
+    {
+        AudioController.Instance.AddSoundToPlay(AudioController.SoundEffectType.Count, 2.0f, false);
+        SetStory("Suddenly the rain stops, magically and birds start chirping");
+        SetOption(";(", State.Intro);
+        SetOption("Play again", State.Intro);
+    }
+    
     private void Start()
     {
         ResetSelector();
@@ -194,6 +206,11 @@ public class TextController : MonoBehaviour
             case State.BearCatchesYou:
                 BearCatchesYou();
                 break;
+            case State.AfterBear:
+                AfterBear();
+                break;
         }
     }
+
+  
 }
